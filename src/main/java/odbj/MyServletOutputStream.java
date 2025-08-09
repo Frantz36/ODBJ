@@ -35,8 +35,9 @@ public class MyServletOutputStream extends ServletOutputStream {
         System.out.println("MyServletOutputStream: constructor ("+isodb+")");
         if (isodb)
             try {
-                d = new Downloader();
-                d.start();
+                /*d = new Downloader();
+                d.start();*/
+                d = GlobalDownloader.getInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -198,7 +199,7 @@ public class MyServletOutputStream extends ServletOutputStream {
                     byte[] b =  new byte[buff.length];
                     System.arraycopy(buff, 0, b, 0, buff.length);
                     int id = d.addPayload(b);
-                    VirtualDescriptor desc = new VirtualDescriptor("10.0.10.2", d.getPort(), id, buff.length);
+                    VirtualDescriptor desc = new VirtualDescriptor("10.0.10.2"/*"localhost"*/, d.getPort(), id, buff.length);
                     byte[] buf = serializeObjectToBytes(desc);
                     sos.write(buf); sos.flush();
                 } else {
@@ -216,7 +217,7 @@ public class MyServletOutputStream extends ServletOutputStream {
                 byte[] b =  new byte[buff.length];
                 System.arraycopy(buff, 0, b, 0, buff.length);
                 int id = d.addPayload(b);
-                VirtualDescriptor desc = new VirtualDescriptor("10.0.10.2", d.getPort(), id, buff.length);
+                VirtualDescriptor desc = new VirtualDescriptor("10.0.10.2"/*"localhost"*/, d.getPort(), id, buff.length);
                 byte[] buf = serializeObjectToBytes(desc);
                 sos.write(buf); sos.flush();
             } else {
@@ -248,7 +249,7 @@ public class MyServletOutputStream extends ServletOutputStream {
 
     public void close() throws IOException {
         sos.close();
-        d.kill();
+//        d.kill();
     }
 
     @Override

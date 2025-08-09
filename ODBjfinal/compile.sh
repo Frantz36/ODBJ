@@ -45,7 +45,7 @@ javac  --release 17 -cp "/home/sepia/Downloads/StageINP/TPInitiationServlet/serv
                                       $SRC_DIR_ODBJ/Handler.java
 
 
-javac -Xlint -cp "/home/sepia/Downloads/StageINP/TPInitiationServlet/servlet-mod-is/ODBjfinal/asm/jakarta.servlet-api-5.0.0.jar" -d $DEST_DIR $SRC_DIR_ODBJ/Downloader.java \
+javac -Xlint --release 17 -cp "/home/sepia/Downloads/StageINP/TPInitiationServlet/servlet-mod-is/ODBjfinal/asm/jakarta.servlet-api-5.0.0.jar" -d $DEST_DIR $SRC_DIR_ODBJ/Downloader.java \
                                       $SRC_DIR_ODBJ/MyHttpServletRequest.java \
                                       $SRC_DIR_ODBJ/MyHttpServletResponse.java \
                                       $SRC_DIR_ODBJ/MyServletInputStream.java \
@@ -53,7 +53,7 @@ javac -Xlint -cp "/home/sepia/Downloads/StageINP/TPInitiationServlet/servlet-mod
                                       $SRC_DIR_ODBJ/RealDescriptor.java \
                                       $SRC_DIR_ODBJ/VirtualDescriptor.java
 
-javac -g -cp "/home/sepia/Downloads/StageINP/TPInitiationServlet/servlet-mod-is/ODBjfinal/asm/jakarta.servlet-api-5.0.0.jar" -d $DEST_DIR/app $SRC_DIR_APP/InterServer.java
+javac -g --release 17 -cp "/home/sepia/Downloads/StageINP/TPInitiationServlet/servlet-mod-is/ODBjfinal/asm/jakarta.servlet-api-5.0.0.jar" -d $DEST_DIR/app $SRC_DIR_APP/IntermodServer.java
 
 
 echo "Compilation terminée. Les fichiers .class sont dans : $DEST_DIR"
