@@ -175,7 +175,7 @@ public class MyHttpServletRequest implements HttpServletRequest {
         return false;
     }
 
-//    @Override
+    @Override
     public boolean isRequestedSessionIdFromURL() {
         return req.isRequestedSessionIdFromUrl();
     }

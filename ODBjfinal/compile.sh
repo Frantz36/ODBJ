@@ -53,7 +53,7 @@ javac -Xlint -cp "/home/sepia/Downloads/StageINP/TPInitiationServlet/servlet-be/
                                       $SRC_DIR_ODBJ/RealDescriptor.java \
                                       $SRC_DIR_ODBJ/VirtualDescriptor.java
 
-javac -g -cp "/home/sepia/Downloads/StageINP/TPInitiationServlet/servlet-be/ODBjfinal/asm/jakarta.servlet-api-5.0.0.jar" -d $DEST_DIR/app $SRC_DIR_APP/InterServer.java
+javac -g --release 17 -cp "/home/sepia/Downloads/StageINP/TPInitiationServlet/servlet-be/ODBjfinal/asm/jakarta.servlet-api-5.0.0.jar" -d $DEST_DIR/app $SRC_DIR_APP/BackendServer.java
 
 
 echo "Compilation terminée. Les fichiers .class sont dans : $DEST_DIR"

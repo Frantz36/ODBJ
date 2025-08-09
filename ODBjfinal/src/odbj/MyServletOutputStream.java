@@ -203,7 +203,7 @@ public class MyServletOutputStream extends ServletOutputStream {
                     byte[] b =  new byte[buff.length];
                     System.arraycopy(buff, 0, b, 0, buff.length);
                     int id = d.addPayload(b);
-                    VirtualDescriptor desc = new VirtualDescriptor("localhost", d.getPort(), id, buff.length);
+                    VirtualDescriptor desc = new VirtualDescriptor("10.0.10.1"/*"localhost"*/, d.getPort(), id, buff.length);
                     byte[] buf = serializeObjectToBytes(desc);
                     sos.write(buf); sos.flush();
                 } else {
@@ -221,7 +221,7 @@ public class MyServletOutputStream extends ServletOutputStream {
                 byte[] b =  new byte[buff.length];
                 System.arraycopy(buff, 0, b, 0, buff.length);
                 int id = d.addPayload(b);
-                VirtualDescriptor desc = new VirtualDescriptor("localhost", d.getPort(), id, buff.length);
+                VirtualDescriptor desc = new VirtualDescriptor("10.0.10.1"/*"localhost"*/, d.getPort(), id, buff.length);
                 byte[] buf = serializeObjectToBytes(desc);
                 sos.write(buf); sos.flush();
             } else {

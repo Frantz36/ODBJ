@@ -81,6 +81,7 @@ public class CodeParserExceptions {
     static List<FieldNode> parseFields(List<FieldNode> fields) {
 
         fields.add(new FieldNode(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "_tables", "Ljava/util/Hashtable;", null, null));
+        fields.add(new FieldNode(Opcodes.ACC_PUBLIC, "downloader", "Lodbj/GlobalDownloader;", null, null));
         if (second != false) {
             List<FieldNode> lf = new ArrayList<FieldNode>();
             for (FieldNode f : fields) {
@@ -811,16 +812,30 @@ public class CodeParserExceptions {
             for (MethodNode m : cn.methods) {
                 System.out.println("METHOD ("+m.name+"): desc : "+ m.desc);
 
-                if (m.name.equals("<clinit>")) {
-                    addCreateTable(m);
-                    bclinit = true;
-                    System.out.println("bclinit turn : " + bclinit);
-                }
+
                 m.desc = parseMethodDesc(m.name,m.desc, true);
                 System.out.println("Variables locales :" +m.localVariables.size());
                 parseLocalVariables(m);
-
                 parseInstructions(m);
+
+                if (m.name.equals("<init>")) {
+                    InsnList toInject2 = new InsnList();
+                    toInject2.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                    toInject2.add(new MethodInsnNode(
+                            Opcodes.INVOKESTATIC,
+                            "odbj/GlobalDownloader",
+                            "getInstance",
+                            "()Lodbj/GlobalDownloader;",
+                            false
+                    ));
+                    toInject2.add(new FieldInsnNode(
+                            Opcodes.PUTFIELD,
+                            owner,
+                            "downloader",
+                            "Lodbj/GlobalDownloader;"
+                    ));
+                    m.instructions.insert(toInject2);
+                }
 
                 System.out.println();
 

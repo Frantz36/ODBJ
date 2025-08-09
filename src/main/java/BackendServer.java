@@ -35,7 +35,8 @@ public class BackendServer extends HttpServlet {
             System.out.println("From BackendServer: LocalNAme"+request.getLocalName());
             System.out.println("From BackendServer: ServerName"+request.getServerName());
             InputStream file = new FileInputStream("/opt/images/"+ine+".jpeg");
-            byte [] buffer = new byte[185000];
+//            InputStream file = new FileInputStream("/home/sepia/Downloads/images/"+ine+".jpeg");
+            byte [] buffer = new byte[56000];
             int len;
             while ((len = file.read(buffer)) != -1) {
                 out.write(buffer, 0, len);
