@@ -1,0 +1,11 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/cslimani/Recherche/2024-2025/explorations/Exploration_Injection-Byte-code/asm/asm-util-9.7.1.jar",
+        "/home/cslimani/Recherche/2024-2025/explorations/Exploration_Injection-Byte-code/asm/asm-test-9.7.1.jar",
+        "/home/cslimani/Recherche/2024-2025/explorations/Exploration_Injection-Byte-code/asm/asm-commons-9.7.1.jar",
+        "/home/cslimani/Recherche/2024-2025/explorations/Exploration_Injection-Byte-code/asm/asm-tree-9.7.1.jar",
+        "/home/cslimani/Recherche/2024-2025/explorations/Exploration_Injection-Byte-code/asm/asm-analysis-9.7.1.jar",
+        "/home/cslimani/Recherche/2024-2025/explorations/Exploration_Injection-Byte-code/asm/asm-9.7.1.jar"
+    ]
+}

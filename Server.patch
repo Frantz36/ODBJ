@@ -1,0 +1,120 @@
+Index: src/app/Server.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/app/Server.java b/src/app/Server.java
+--- a/src/app/Server.java
++++ b/src/app/Server.java	(date 1749139119664)
+@@ -12,9 +12,7 @@
+ 	
+ 	static final int BUF_SIZE = 50000000;
+ 	static byte buf[] = new byte[BUF_SIZE];
+-	static byte buf2[] = new byte[BUF_SIZE];
+ 	static int offset;
+-	static int offset2;
+ 
+ 	static int server_port;
+ 	static String target_host;
+@@ -27,28 +25,25 @@
+ 		perror(msg);
+ 		System.exit(0);
+ 	}
+-
+-	//Supposition: Lis dans le buffer jusqu'à rencontrer un \r\n.
++	
+ 	static String read_line(InputStream is) {
+ 		try {
+ 			int c;
+-			int startOffset = 0;
+-			startOffset = offset2;
++			int startOffset = offset;
+ 			while (true) {
+-				if (offset2 >= BUF_SIZE) perrorexit("_: read buffer overflow");
++				if (offset >= BUF_SIZE) perrorexit("_: read buffer overflow");
+ 				c = is.read();
+ 				if (c == -1) perrorexit("read_line: unexpected EOF");
+-				buf2[offset2++] = (byte)c;
++				buf[offset++] = (byte)c;
+ 				if (c == '\r') {
+-					if (offset2 >= BUF_SIZE) perrorexit("read_line: read buffer overflow");
++					if (offset >= BUF_SIZE) perrorexit("read_line: read buffer overflow");
+ 					c = is.read();
+ 					if (c == -1) perrorexit("read_line: unexpected EOF");
+-					buf2[offset2++] = (byte)c;
++					buf[offset++] = (byte)c;
+ 					if (c != '\n') perrorexit("read_line: incomplete CRLF sequence");
+-					int sz = 0;
+-					sz = offset2-startOffset-2;
+-					String ret = new String(buf2/*, startOffset, sz*/);
+-					System.out.println("read_line: received: "+ret);
++					int sz = offset-startOffset-2;
++					String ret = new String(buf, startOffset, sz);
++					//System.out.println("read_line: received: "+ret);
+ 					return ret;
+ 				}
+ 			}
+@@ -57,8 +52,7 @@
+ 			return null;
+ 		}
+ 	}
+-
+-	//Supposition: Lis le buffer/contenu de la réquête ou de la réponse
++	
+ 	static void read_buf(InputStream is, int len) {
+ 		try {
+ 			if ((BUF_SIZE-offset)<len) perrorexit("read_buf: read buffer overflow");
+@@ -195,7 +189,6 @@
+ 			path = get_path(line);
+ 
+ 			content_len = 0;
+-			//Supposition: Bout de code pour vérifier si l'IS du Socket a été complètement lu.
+ 			while (true) {
+ 				line = read_line(cis);
+ 				len = content_length(line);
+@@ -204,30 +197,24 @@
+ 				if (line.length() == 0) break;
+ 			}
+ 			System.out.println("Web request Content_Length: "+content_len);
+-			//Supposition: Si la requête/réponse a une payload, on la lit.
+ 			if (content_len>0) read_buf(cis, content_len);
+ 
+-			//Supposition: On récupère l'OS du Socket courant
+ 			cos = cli.getOutputStream();
+ 			if (request.equals("GET")) {
+ 				System.out.println("Web request GET ("+path+")");
+ 				try {
+-					//On se connecte à la target et on récupère son OS et son IS.
+ 					Socket serv = new Socket(target_host, target_port);
+ 					sis = serv.getInputStream();
+ 					sos = serv.getOutputStream();
+ 
+-					//Supposition: On écrit dans l'OS de la target à laquelle on vient de se connecter
+ 					write_buf(sos, buf, offset);
+ 					System.out.println("Inter request Have written: "+offset);
+ 
+ 					offset = 0;
+-					//Supposition: On lit la réponse envoyée par le target
+ 					line = read_line(sis);
+ 					ret = get_return(line);
+ 					System.out.println("Inter response: "+ret);
+ 
+-					//Supposition: On vérifie s'il y'a unne payload
+ 					content_len = 0;
+ 					while (true) {
+ 						line = read_line(sis);
+@@ -236,14 +223,11 @@
+ 						if (line.length() == 0) break;
+ 					}
+ 					//System.out.println("Inter response Content_Length: "+content_len);
+-					//Supposition: Si (payload), on la récupère et on ferme la connexion avec le target.
+ 					if (content_len>0) read_buf(sis, content_len);
+ 					serv.close();
+ 					System.out.println("----------------INTER WRITE-----------");
+-					//On réécrit dans l'OS du Socket du serveur courant, cet OS pointe vers nous, le client
+ 					write_buf(cos, buf, offset);
+ 					System.out.println("Inter response: "+offset);
+-					//On ferma la connexion avec le client
+ 					cli.close();
+ 					return;
+ 				} catch (Exception ex) {
