@@ -180,7 +180,7 @@ public class MyHttpServletRequest implements HttpServletRequest {
         return false;
     }
 
-//    @Override
+    @Override
     public boolean isRequestedSessionIdFromURL() {
         return false;
     }
@@ -392,6 +392,8 @@ public class MyHttpServletRequest implements HttpServletRequest {
     public ServletConnection getServletConnection() {
         return null;
     }
+
+
 
     /*@Override
     public String getRequestId() {

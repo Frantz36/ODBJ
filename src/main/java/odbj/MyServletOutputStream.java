@@ -40,8 +40,9 @@ public class MyServletOutputStream extends ServletOutputStream {
         System.out.println("MyServletOutputStream: constructor ("+isodb+")");
         if (isodb)
             try {
-                d = new Downloader();
-                d.start();
+                /*d = new Downloader();
+                d.start();*/
+                d = GlobalDownloader.getInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -203,7 +204,7 @@ public class MyServletOutputStream extends ServletOutputStream {
                     byte[] b =  new byte[buff.length];
                     System.arraycopy(buff, 0, b, 0, buff.length);
                     int id = d.addPayload(b);
-                    VirtualDescriptor desc = new VirtualDescriptor("10.0.10.3", d.getPort(), id, buff.length);
+                    VirtualDescriptor desc = new VirtualDescriptor("10.0.10.3"/*"localhost"*/, d.getPort(), id, buff.length);
                     byte[] buf = serializeObjectToBytes(desc);
                     sos.write(buf); sos.flush();
                 } else {
@@ -221,7 +222,7 @@ public class MyServletOutputStream extends ServletOutputStream {
                 byte[] b =  new byte[buff.length];
                 System.arraycopy(buff, 0, b, 0, buff.length);
                 int id = d.addPayload(b);
-                VirtualDescriptor desc = new VirtualDescriptor("10.0.10.3", d.getPort(), id, buff.length);
+                VirtualDescriptor desc = new VirtualDescriptor("10.0.10.3"/*"localhost"*/, d.getPort(), id, buff.length);
                 byte[] buf = serializeObjectToBytes(desc);
                 sos.write(buf); sos.flush();
             } else {
@@ -238,7 +239,7 @@ public class MyServletOutputStream extends ServletOutputStream {
 
     public void write(byte[] buff) throws IOException {
         /*try {
-            VirtualDescriptor desc = (VirtualDescriptor) deserializeBytesToObject(buff);
+//            VirtualDescriptor desc = (VirtualDescriptor) deserializeBytesToObject(buff);
             write(buff, 0, desc.len);
         } catch (Exception e){
             e.printStackTrace();
@@ -253,7 +254,7 @@ public class MyServletOutputStream extends ServletOutputStream {
 
     public void close() throws IOException {
         sos.close();
-        d.kill();
+//        d.kill();
     }
 
     @Override

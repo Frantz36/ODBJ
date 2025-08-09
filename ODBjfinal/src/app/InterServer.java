@@ -24,7 +24,7 @@ public class InterServer extends HttpServlet {
         response.setContentType("image/jpeg");
 
         HttpClient client =  HttpClient.newHttpClient();
-        String uri =  String.format("http://128.110.217.110:8080/servlet-mod-is/intermodserver?ine=%s",ine);
+        String uri =  String.format("http://10.0.10.2:8080/servlet-mod-is/intermodserver?ine=%s",ine);
         HttpRequest httpRequest =  newBuilder()
                 .uri(URI.create(uri))
                 .GET()
