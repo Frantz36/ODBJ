@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 import static java.net.http.HttpRequest.newBuilder;
 
 @WebServlet("/interserver")
-public class InterServer extends HttpServlet {
+public class  InterServer extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
