@@ -40,7 +40,7 @@ public class BackendServer extends HttpServlet {
             int len;
             while ((len = file.read(buffer)) != -1) {
 
-                //On crée un buffer tronqué à la taille de lapayload à lire
+                //On crée un buffer tronqué à la taille de la payload à lire
                 byte[] exact = new byte[len];
 
                 //On copie uniquement le nombre d'octets lus
